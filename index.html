@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Mi Billetera Lite: registra tus gastos diarios, incluso sin conexión.">
+  <meta name="theme-color" content="#0f766e">
+  <title>Mi Billetera Lite</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icons/favicon.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Billetera">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__row">
+      <h1 class="brand">
+        <img src="icons/icon-192.png" alt="" width="28" height="28">
+        Mi Billetera Lite
+      </h1>
+      <span id="estado-red" class="pill" role="status" aria-live="polite">En línea</span>
+    </div>
+
+    <!-- Totalizador -->
+    <section class="total" aria-labelledby="total-label">
+      <p id="total-label" class="total__label">Total gastado</p>
+      <p id="total" class="total__amount">$0.00</p>
+      <p id="total-count" class="total__count">0 gastos registrados</p>
+    </section>
+
+    <button id="btn-instalar" class="btn btn--ghost" type="button" hidden>
+      Instalar aplicación
+    </button>
+  </header>
+
+  <main class="container">
+    <!-- Formulario de registro -->
+    <section class="card" aria-labelledby="form-title">
+      <h2 id="form-title" class="card__title">Nuevo gasto</h2>
+      <form id="form-gasto" novalidate>
+        <div class="field">
+          <label for="concepto">Concepto</label>
+          <input id="concepto" name="concepto" type="text" placeholder="Ej: Café"
+                 maxlength="60" autocomplete="off" required>
+          <small class="error" id="err-concepto"></small>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="monto">Monto</label>
+            <div class="input-prefix">
+              <span aria-hidden="true">$</span>
+              <input id="monto" name="monto" type="number" inputmode="decimal"
+                     placeholder="45.50" min="0.01" step="0.01" required>
+            </div>
+            <small class="error" id="err-monto"></small>
+          </div>
+
+          <div class="field">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria" required>
+              <option value="Comida">🍔 Comida</option>
+              <option value="Transporte">🚌 Transporte</option>
+              <option value="Servicios">💡 Servicios</option>
+              <option value="Ocio">🎮 Ocio</option>
+              <option value="Otros">📦 Otros</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn btn--primary" type="submit">Guardar gasto</button>
+      </form>
+    </section>
+
+    <!-- Historial -->
+    <section class="card" aria-labelledby="hist-title">
+      <div class="card__head">
+        <h2 id="hist-title" class="card__title">Historial</h2>
+        <button id="btn-borrar-todo" class="btn btn--link" type="button" hidden>Borrar todo</button>
+      </div>
+      <ul id="lista-gastos" class="lista" aria-live="polite"></ul>
+      <p id="vacio" class="vacio">Aún no registras gastos. ¡Agrega el primero!</p>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/db.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
